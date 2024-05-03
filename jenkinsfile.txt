@@ -20,12 +20,12 @@ pipeline {
                 success{
                     mail to: "uyapo.m2@gmail.com",
                     subject: "Test Status Email",
-                    body: "Test was successful"
-                }
-                fail{
+                    body: "Unit and Integration Testing was SUCCESSFUL"
+                 }
+                failure{
                     mail to: "uyapo.m2@gmail.com",
                     subject: "Test Status Email",
-                    body: "Test was not successful"
+                    body: "Unit and Integration Testing was NOT SUCCESSFUL"
                 }
             }
         }
@@ -37,6 +37,18 @@ pipeline {
         stage ('Security Scan') {
             steps {
                 echo "Using Qualys to scan and identify vulnerabilities"
+            }
+                       post{
+                success{
+                    mail to: "uyapo.m2@gmail.com",
+                    subject: "Security Scan Status Email",
+                    body: "The security scan was SUCCESSFUL. No vulnerabilities identified."
+                }
+                failure{
+                    mail to: "uyapo.m2@gmail.com",
+                    subject: "Security Scan Status Email",
+                    body: "The security scan was NOT SUCCESSFUL. Refer to log for more information."
+                }
             }
         }
         stage ('Deploy to Staging') {
